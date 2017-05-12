@@ -6,14 +6,14 @@
 		<h2>
 			<p>This is for Customer.</p>			
 			<form>
-					<input type="submit" value="Go Customer Page">
+					<input type="submit" value="Go Customer Page" formaction=customer.jsp>
 			</form>
 		</h2>
 	</div>
 	<h2>
 		<p>This is for System Admin</p>
 		<form>
-					<input type="submit" value="Go System Admin Page">
+					<input type="submit" value="Go System Admin Page" formaction=admin.jsp>
 			</form>		
 	</h2>
 </body>
