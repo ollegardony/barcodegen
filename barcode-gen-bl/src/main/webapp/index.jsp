@@ -10,7 +10,7 @@
 		<h2>
 			<p>This is for Customer.</p>			
 			<form>
-					<input type="submit" value="Go Customer Page" formaction=customer.html>
+					<input type="submit" value="Go Customer Page" formaction=customer.jsp>
 			</form>
 		</h2>
 	</div>
