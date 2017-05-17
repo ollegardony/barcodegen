@@ -13,44 +13,45 @@ $(document).ready(function () {
 
 function fire_ajax_submit() {
 	
-	<!--
+	
     var search = {}
     search["userCode"] = $("#userCode").val();
-	  search["priceType"] = $("#priceType").val();
+	  search["barcodeType"] = $("#barcodeType").val();
+	 	
 
-    $("#getPrice").prop("disabled", true);
-	-->
+	$('table tbody').empty(); 
     $.ajax({
-        type: "POST",
+        type: "GET",
         contentType: "application/json",
         url: "http://localhost:8080/barcode-gen-bl/barcode/getPrice",
 		headers: { 'Access-Control-Allow-Origin': '*' },
-        data: JSON.stringify({
-                    userCode: "sa",
-                    priceType: 1
-                }),
+        data:search,
         dataType: 'json',
         cache: false,
         timeout: 600000,
         success: function (data) {
-
-            var json = "<h4>Ajax Response</h4><pre>"
-                + JSON.stringify(data, null, 4) + "</pre>";
-            $('#feedback').html(json);
-
-            console.log("SUCCESS : ", data);
-            $("#btn-search").prop("disabled", false);
+        	
+        	var items = [];
+        	        	
+        	$.each(data, function(key, val){
+        		
+        		var col = "<tr>";
+        		col = col + "<td id = ''"+key+"''>"+val.id+"</td>";
+        		col = col + "<td id = ''"+key+"''>"+val.barcodeType+"</td>";
+        		col = col + "<td id = ''"+key+"''>"+val.charFrom+"</td>";
+        		col = col + "<td id = ''"+key+"''>"+val.charTo+"</td>"; 
+        		col = col + "<td id = ''"+key+"''>"+val.codeNumber+"</td>"; 
+        		col = col + "<td id = ''"+key+"''>"+val.price+"</td>"; 
+        		col = col + "</tr>";
+        		$('table tbody').append(col);
+        		
+        	});
 
         },
         error: function (e) {
 
-            var json = "<h4>Ajax Response</h4><pre>"
-                + e.responseText + "</pre>";
-            $('#feedback').html(json);
-
             console.log("ERROR : ", e);
-            $("#btn-search").prop("disabled", false);
-
+          
         }
     });
 

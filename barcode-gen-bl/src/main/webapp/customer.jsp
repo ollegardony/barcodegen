@@ -7,38 +7,69 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
  
 </head>
-<body>
-	<div>
+<body style="width: 1109px; ">
+	<div class = container >
+		<div class="row">
+			<div class="col-sm-6" style="background-color:yellow;">
+				<form id="setOrder" style="width: 637px; height: 186px">
+					 <label for="userCode">User code: </label>
+					 <input type="text" name="userCode" id="userCode">
+					 <br/>
+					 <label for="barcodeType">Barcode type: </label>
+					 <input type="text" name="barcodeType" id="barcodeType">
+					 <br/>
+					 <button type="submit" id="btn-search">Add Order</button>
+					 			 
+				</form>
+			</div>
+			<div class="col-sm-6" style="background-color:pink;">
+				<form id="registration" style="width: 460px; ">
+					 <label for="userCode">User code: </label>
+					 <input type="text" name="userCode" id="userCode" />
+					 
+					 <label for="barcodeType">Price type: </label>
+					 <input type="text" name="barcodeType" id="barcodeType" />
+					 
+					 <button type='submit' id="btn-search" >Get price list</button>
+					 			 
+				</form>	
+			</div>
+		</div>
+	</div>
+	<div class = container>
 		<form id="getPrice">
 			 <label for="userCode">User code: </label>
 			 <input type="text" name="userCode" id="userCode" />
 			 
-			 <label for="priceType">Price type: </label>
-			 <input type="text" name="priceType" id="priceType" />
+			 <label for="barcodeType">Price type: </label>
+			 <input type="text" name="barcodeType" id="barcodeType" />
 			 
 			 <button type='submit' id="btn-search" >Get price list</button>
 			 			 
-		</form>		
+		</form>
+		<br/>
+		<div>
+			<table class = "table table-bordered table-stripped table-hover">
+				<thead>
+					<tr>
+						<th>id</th>
+						<th>Barcode type</th>
+						<th>Datamatrix charater from</th>
+						<th>Datamatrix charater to</th>
+						<th>Gs1 Code number</th>
+						<th>Price</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+				
 	</div>
-	<p><br/><br/></p>
-	<div class = container>
-		<table class = "table table-bordered table-stripped table-hover">
-			<thead>
-				<tr>
-					<th>id</th>
-					<th>Barcode type</th>
-					<th>Datamatrix charater from</th>
-					<th>Datamatrix charater to</th>
-					<th>Gs1 Code number</th>
-					<th>Price</th>
-				</tr>
-			</thead>
-		</table>
-	</div>
-	
+		
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
  	
 	<script src="resources/js/main.js" type="text/javascript"></script>
+	
 </body>
 </html>

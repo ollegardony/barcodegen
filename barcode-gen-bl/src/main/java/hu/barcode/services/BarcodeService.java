@@ -6,6 +6,6 @@ import hu.barcode.entities.BarcodePrice;
 
 public interface BarcodeService {
 	
-	public List<BarcodePrice> getBarcodePrice(String userCode, int priceType) ;
+	public List<BarcodePrice> getBarcodePrice(String userCode, int barcodeType) ;	
 		
 }
