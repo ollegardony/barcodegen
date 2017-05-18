@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Email;
 
 @Entity
@@ -27,6 +28,9 @@ public class BarcodeUser extends BaseEntity {
 	
 	@Column(name = "tax_number", length = 20,nullable = true)
 	String taxNumber;
+	
+	@Column(name = "admin_user", nullable = false, columnDefinition="int default 0")	
+	Boolean admunUser;
 	
 	public String getLoginName() {
 		return loginName;
@@ -66,6 +70,14 @@ public class BarcodeUser extends BaseEntity {
 
 	public void setTaxNumber(String taxNumber) {
 		this.taxNumber = taxNumber;
+	}
+
+	public Boolean getAdmunUser() {
+		return admunUser;
+	}
+
+	public void setAdmunUser(Boolean admunUser) {
+		this.admunUser = admunUser;
 	}
 
 	public static long getSerialversionuid() {

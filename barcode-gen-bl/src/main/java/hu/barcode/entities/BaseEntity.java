@@ -13,6 +13,10 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable{
 
@@ -24,10 +28,12 @@ public abstract class BaseEntity implements Serializable{
 	
 	@Column(name = "modify_dt", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@LastModifiedDate
 	protected Date modifyDt;
 
 	@Column(name = "create_dt", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@CreatedDate
 	protected Date createyDt;
 	
 	public Long getId() {
@@ -83,14 +89,5 @@ public abstract class BaseEntity implements Serializable{
 
 	protected abstract Class<? extends BaseEntity> getEqualsClass();
 	
-	@PrePersist
-    protected void onCreate() {
-		modifyDt = createyDt = new Date();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-    	modifyDt = new Date();
-    }
 }
 

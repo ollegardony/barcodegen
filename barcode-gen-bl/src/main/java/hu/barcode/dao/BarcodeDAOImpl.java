@@ -53,8 +53,10 @@ public class BarcodeDAOImpl extends DAOBase implements BarcodeDAO {
 	
 	@Override
 	public BarcodeUser saveBarcodeUser(BarcodeUser user){
-		BarcodeUser b = new BarcodeUser();
-		return b;
+		Session session = hibernateSessionFactory.getCurrentSession();
+		session.save(user);
+		//session.persist(user);		
+		return user;
 	}
 	
 	@Override

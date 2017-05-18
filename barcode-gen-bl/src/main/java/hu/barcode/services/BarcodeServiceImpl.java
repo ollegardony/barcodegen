@@ -17,13 +17,27 @@ public class BarcodeServiceImpl extends ServiceBase implements BarcodeService {
 		
 		BarcodeUser user = dao.getBarcodeUser(userCode);
 				
-		if (user == null || !userCode.equals("sa")) {
-			throwBarcodeFaultException("0002", "Hiba");
+		if (user == null || !user.getAdmunUser().equals(true)) {
+			throwBarcodeFaultException("0001", "Hiba Ne admin user");
 		}
 
 		return dao.getBarcodePriceList(barcodeType);
 	}
 	
-
+	@Override
+	@Transactional
+	public BarcodeUser saveBarcodeUser(String loginName, String emailAdress, String companyName, String companyAdress, String taxNumber) throws BarcodeFaultException {
+		BarcodeUser user = new BarcodeUser();
+		if (dao.getBarcodeUser(loginName) != null){
+			throwBarcodeFaultException("0002", "Hiba van már ilyeb user");
+		}
+		user.setLoginName(loginName);;
+		user.setEmailAdress(emailAdress);
+		user.setCompanyName(companyName);
+		user.setCompanyAdress(companyAdress);
+		user.setTaxNumber(taxNumber);
+				
+		return dao.saveBarcodeUser(user);
+	}
 
 }
