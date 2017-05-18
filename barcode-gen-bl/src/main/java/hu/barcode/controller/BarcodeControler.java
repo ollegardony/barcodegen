@@ -12,6 +12,7 @@ import hu.barcode.entities.BarcodePrice;
 import hu.barcode.entities.BarcodeUser;
 import hu.barcode.services.BarcodeFault;
 import hu.barcode.services.BarcodeFaultException;
+import hu.barcode.services.BarcodeOrderResponse;
 import hu.barcode.services.BarcodeService;
 
 @RestController
@@ -42,7 +43,14 @@ public class BarcodeControler {
 		return this.services.saveBarcodeUser(loginName, emailAdress, companyName, companyAdress, taxNumber );
 	}
 
+	@RequestMapping(value = "/barcode/saveOrder", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	public BarcodeOrderResponse saveBarcodeOrder(@RequestParam String loginName, @RequestParam int barcodeType, @RequestParam String datamatrixText, @RequestParam String gs1Code1, @RequestParam String gs1Code2,  
+				@RequestParam String gs1Code3, @RequestParam String gs1Code4, @RequestParam String gs1Code5) {
 
+		return this.services.saveBarcodeOrder(loginName, barcodeType, datamatrixText, gs1Code1, gs1Code2, gs1Code3, gs1Code4, gs1Code5);
+	}
+
+	
 	@ExceptionHandler(BarcodeFaultException.class)
 	public BarcodeFault barcodeError(BarcodeFaultException exp) {
 

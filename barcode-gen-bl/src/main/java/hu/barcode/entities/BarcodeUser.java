@@ -3,8 +3,6 @@ package hu.barcode.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Email;
 
 @Entity
@@ -30,7 +28,7 @@ public class BarcodeUser extends BaseEntity {
 	String taxNumber;
 	
 	@Column(name = "admin_user", nullable = false, columnDefinition="int default 0")	
-	Boolean admunUser;
+	Boolean adminUser;
 	
 	public String getLoginName() {
 		return loginName;
@@ -72,12 +70,12 @@ public class BarcodeUser extends BaseEntity {
 		this.taxNumber = taxNumber;
 	}
 
-	public Boolean getAdmunUser() {
-		return admunUser;
+	public Boolean getAdminUser() {
+		return adminUser;
 	}
 
-	public void setAdmunUser(Boolean admunUser) {
-		this.admunUser = admunUser;
+	public void setAdminUser(Boolean admunUser) {
+		this.adminUser = admunUser;
 	}
 
 	public static long getSerialversionuid() {

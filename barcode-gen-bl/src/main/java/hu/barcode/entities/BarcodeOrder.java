@@ -31,11 +31,11 @@ public class BarcodeOrder extends BaseEntity {
 	Double orderPrice;
 
 	@Column(name = "barcode_type", nullable = false)
-	@Range(min = 0, max = 1)
+//	@Range(min = 0, max = 1)
 	BarcodeType barcodeType;
 
 	@Column(name = "barcode_state", nullable = false)
-	@Range(min = 0, max = 2)
+	//@Range(min = 0, max = 2)
 	BarcodeOrderState barcodeState;
 
 	@Column(name = "datamatrix_text", length = 255, nullable = true)

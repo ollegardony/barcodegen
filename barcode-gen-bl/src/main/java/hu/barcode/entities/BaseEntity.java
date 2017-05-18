@@ -8,14 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable{
@@ -28,13 +23,11 @@ public abstract class BaseEntity implements Serializable{
 	
 	@Column(name = "modify_dt", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	@LastModifiedDate
-	protected Date modifyDt;
+	protected Date modifyDt = new Date();
 
 	@Column(name = "create_dt", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	@CreatedDate
-	protected Date createyDt;
+	@Temporal(TemporalType.TIMESTAMP)	
+	protected Date createyDt = new Date();
 	
 	public Long getId() {
 		return id;
@@ -58,6 +51,11 @@ public abstract class BaseEntity implements Serializable{
 
 	public void setCreateyDt(Date createyDt) {
 		this.createyDt = createyDt;
+	}
+	
+	@PreUpdate
+	public void onUpdate() {  
+		this.modifyDt = new Date(); 
 	}
 
 	@Override

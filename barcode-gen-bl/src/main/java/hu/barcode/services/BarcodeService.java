@@ -8,5 +8,5 @@ public interface BarcodeService {
 	
 	public List<BarcodePrice> getBarcodePrice(String userCode, int barcodeType) ;	
 	public BarcodeUser saveBarcodeUser(String loginName, String emailAdress, String companyName, String companyAdress,  String taxNumber);
-		
+	public BarcodeOrderResponse saveBarcodeOrder(String loginName, int barcodeType, String datamatrixText, String gs1Code1, String gs1Code2, String gs1Code3, String gs1Code4, String gs1Code5);	
 }
