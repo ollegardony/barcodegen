@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import hu.barcode.entities.BarcodePrice;
 import hu.barcode.entities.BarcodeUser;
+import hu.barcode.enums.BarcodeOrderState;
 import hu.barcode.services.BarcodeFault;
 import hu.barcode.services.BarcodeFaultException;
 import hu.barcode.services.BarcodeOrderResponse;
@@ -50,6 +51,11 @@ public class BarcodeControler {
 		return this.services.saveBarcodeOrder(loginName, barcodeType, datamatrixText, gs1Code1, gs1Code2, gs1Code3, gs1Code4, gs1Code5);
 	}
 
+	@RequestMapping(value = "/barcode/getBarcode", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	public BarcodeOrderState getBarcode(@RequestParam String orderNumber) {
+
+		return this.services.getBarcode(orderNumber);
+	}
 	
 	@ExceptionHandler(BarcodeFaultException.class)
 	public BarcodeFault barcodeError(BarcodeFaultException exp) {

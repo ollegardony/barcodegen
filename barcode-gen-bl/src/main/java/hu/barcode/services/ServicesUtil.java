@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ComponentScan
-public class ServicesUtil extends ServiceBase {
+public class ServicesUtil extends ServiceBase{
 
 	public Double getDatamatrixPrice(int charNum) {
 

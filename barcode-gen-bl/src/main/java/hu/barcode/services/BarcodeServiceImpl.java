@@ -108,5 +108,9 @@ public class BarcodeServiceImpl extends ServiceBase implements BarcodeService {
 		return resp;
 
 	}
-
+	
+	public BarcodeOrderState getBarcode(String orderNumber){
+		
+		return BarcodeOrderState.SENT;
+	}
 }

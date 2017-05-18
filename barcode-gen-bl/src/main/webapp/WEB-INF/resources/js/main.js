@@ -87,6 +87,19 @@ function saveBarcodeUser() {
 		cache : false,
 		timeout : 600000,
 		success : function(data) {
+			if(data.hasOwnProperty('errorCode')){
+				BootstrapDialog.alert(data.errorMessage);
+			}else{
+				  BootstrapDialog.show({
+			            message: 'Sikeres regisztáció!',
+			            buttons: [{
+			                label: 'Close',
+			                action: function(dialogItself){
+			                    dialogItself.close();
+			                }
+			            }]
+			        });
+			}
 
 		},
 		error : function(e) {
@@ -129,6 +142,63 @@ function saveOrder() {
 		cache : false,
 		timeout : 600000,
 		success : function(data) {
+			if(data.hasOwnProperty('errorCode')){
+				BootstrapDialog.alert(data.errorMessage);
+			}else{
+			        BootstrapDialog.show({
+			            message: 'A rendelési azonosítója: ' + data.orderNumber + '. Fizetendő összeg: ' + data.orderPrice,
+			            data: {
+			                'userCode': data.userCode,
+			                'orderNumber': data.orderNumber,
+			                'orderPrice': data.orderPrice
+			            },
+			            buttons: [{
+			                label: 'See what you got',
+			                cssClass: 'btn-primary',
+			                action: function(dialogRef){
+
+			                	
+			                	var jsonParam = {}
+			                	jsonParam["orderNumber"] = dialogRef.getData('orderNumber');
+			                				                	
+			                	$.ajax({
+			                		type : "GET",
+			                		contentType : "application/json",
+			                		url : "http://localhost:8080/barcode-gen-bl/barcode/getBarcode",
+			                		headers : {
+			                			'Access-Control-Allow-Origin' : '*'
+			                		},
+			                		data : jsonParam,
+			                		dataType : 'json',
+			                		cache : false,
+			                		timeout : 600000,
+			                		success : function(data) {
+			                			if(data.hasOwnProperty('errorCode')){
+			                				BootstrapDialog.alert(data.errorMessage);
+			                			}else{
+			                				  BootstrapDialog.show({
+			                			            message: 'Sikeres visszaigazolás. Az email címére elküldtük a kért Barcode-ot.',
+			                			            buttons: [{
+			                			                label: 'Close',
+			                			                action: function(dialogItself){
+			                			                    dialogItself.close();
+			                			                }
+			                			            }]
+			                			        });
+			                			}
+
+			                		},
+			                		error : function(e) {
+
+			                			console.log("ERROR : ", e);
+
+			                		}
+			                	});
+
+			                }
+			            }]
+			        });
+			}
 
 		},
 		error : function(e) {

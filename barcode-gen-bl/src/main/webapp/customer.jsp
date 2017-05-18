@@ -5,6 +5,8 @@
 	<title>Customer page</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.4/css/bootstrap-dialog.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.4/css/bootstrap-dialog.min.css">
  
 </head>
 <body style="width: 1109px; ">
@@ -59,8 +61,8 @@
 			</div>
 
 			<div class="col-sm-6" style="background-color:#b2b2b2; height: 500px">
-				<br\>
-				<form id="registration"style="width: 400px; height: 400px"">
+				<br/>
+				<form id="registration"style="width: 400px; height: 400px">
 					<div class="form-group">
         				<label for="regUserCode">Login name</label>
         				<input type="text" class="form-control" id="regUserCode" style="width: 280px;" placeholder="Login name">
@@ -106,7 +108,7 @@
 			 <button type='submit' id="btn-search" >Get price list</button>
 			 			 
 		</form>
-	<div/>
+	</div>
 	
 	<br/>
 	<div>
@@ -129,7 +131,8 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
- 	
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.4/js/bootstrap-dialog.js"></script>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.4/js/bootstrap-dialog.min.js"></script>
 	<script src="resources/js/main.js" type="text/javascript"></script>
 	
 </body>

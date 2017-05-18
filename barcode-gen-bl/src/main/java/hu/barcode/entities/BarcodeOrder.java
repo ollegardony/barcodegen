@@ -6,11 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.ForeignKey;
-
-
-import org.hibernate.validator.constraints.Range;
-
 import hu.barcode.enums.BarcodeOrderState;
 import hu.barcode.enums.BarcodeType;
 
