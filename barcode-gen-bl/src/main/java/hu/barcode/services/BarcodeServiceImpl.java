@@ -104,6 +104,9 @@ public class BarcodeServiceImpl extends ServiceBase implements BarcodeService {
 		dao.saveOrder(order);
 
 		BarcodeOrderResponse resp = new BarcodeOrderResponse();
+		resp.setOrderNumber(order.getOrderNumber());
+		resp.setOrderPrice(order.getOrderPrice());
+		resp.setUserCode(user.getLoginName());
 
 		return resp;
 

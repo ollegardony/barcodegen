@@ -51,6 +51,7 @@ public class BarcodeControler {
 		return this.services.saveBarcodeOrder(loginName, barcodeType, datamatrixText, gs1Code1, gs1Code2, gs1Code3, gs1Code4, gs1Code5);
 	}
 
+	
 	@RequestMapping(value = "/barcode/getBarcode", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	public BarcodeOrderState getBarcode(@RequestParam String orderNumber) {
 
