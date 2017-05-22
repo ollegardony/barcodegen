@@ -29,7 +29,7 @@ public class BarcodeServiceImpl extends ServiceBase implements BarcodeService {
 			throwBarcodeFaultException("0001", "Hiba Ne admin user");
 		}
 
-		return dao.getBarcodePriceList(barcodeType);
+		return dao.getBarcodePriceList(barcodeType, 0);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class BarcodeServiceImpl extends ServiceBase implements BarcodeService {
 			}
 			order.setBarcodeType(BarcodeType.DATAMATRIX);
 			order.setDatamatrixText(datamatrixText);
-			order.setOrderPrice(serviceUtils.getDatamatrixPrice(datamatrixText.length()));
+			order.setOrderPrice(serviceUtils.getDatamatrixPrice(dao.getBarcodePriceList(0, 0), datamatrixText.length()));
 		} else {
 			int gs1CodeNumber = 0;
 			if (gs1Code1 == null || gs1Code1.equals("")) {
@@ -95,14 +95,14 @@ public class BarcodeServiceImpl extends ServiceBase implements BarcodeService {
 					}
 				}
 			}
-			order.setOrderPrice(serviceUtils.getGs1Price(gs1CodeNumber));
+			order.setOrderPrice(serviceUtils.getGs1Price(dao.getBarcodePriceList(0, 0),gs1CodeNumber));
 		}
 		
-		order.setOrderNumber(serviceUtils.getOrderNumber());
+		order.setOrderNumber("");
 		order.setBarcodeState(BarcodeOrderState.SAVE);
 		
-		dao.saveOrder(order);
-
+		order = dao.saveOrder(order);
+		
 		BarcodeOrderResponse resp = new BarcodeOrderResponse();
 		resp.setOrderNumber(order.getOrderNumber());
 		resp.setOrderPrice(order.getOrderPrice());
@@ -112,8 +112,29 @@ public class BarcodeServiceImpl extends ServiceBase implements BarcodeService {
 
 	}
 	
-	public BarcodeOrderState getBarcode(String orderNumber){
+	@Override
+	@Transactional
+	public BarcodeOrderState getBarcode(String orderNumber)  throws BarcodeFaultException{
 		
-		return BarcodeOrderState.SENT;
+		BarcodeOrder order = dao.getBarcodeOrder(orderNumber);
+		String filePath = "";
+		
+		if (order == null){
+			throwBarcodeFaultException("0002", "Hibás rendelés azonosító");
+		}
+		
+		try{
+			filePath = serviceUtils.generateDatamatrix(order.getDatamatrixText(), order.getId());	
+		}catch(Exception ex){
+			throwBarcodeFaultException("0002", "Nem sikerült legenerálni a Datamátrixot.");
+		}
+		
+		if (!serviceUtils.sendEmailMessage(order, filePath)){
+			throwBarcodeFaultException("0002", "Nem sikerült elküldeni az email-t.");
+		}
+		order.setBarcodeState(BarcodeOrderState.SENT);
+		dao.saveOrder(order);
+		
+		return order.getBarcodeState();
 	}
 }

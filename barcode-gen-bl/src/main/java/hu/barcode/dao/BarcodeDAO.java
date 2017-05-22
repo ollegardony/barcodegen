@@ -8,10 +8,10 @@ import hu.barcode.entities.BarcodeUser;
 
 public interface BarcodeDAO {
 
-	public List<BarcodePrice> getBarcodePriceList(int barcodeType);
+	public List<BarcodePrice> getBarcodePriceList(int barcodeType, int codeNum);
 	public BarcodeUser getBarcodeUser(String loginName);
-	public BarcodeOrder getBarcodeOrder(String orederNumber);	
+	public BarcodeOrder getBarcodeOrder(String orderNumber);	
 	public BarcodeUser saveBarcodeUser(BarcodeUser user);
 	public BarcodeOrder saveOrder(BarcodeOrder order);
-	
+		
 }

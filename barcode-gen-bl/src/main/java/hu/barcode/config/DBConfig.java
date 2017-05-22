@@ -56,16 +56,10 @@ public class DBConfig {
 	private Properties hibernateProperties() {
 		Properties properties = new Properties();
 		properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
-
-		// properties.put("javax.persistence.schema-generation.database.action",
-		// env.getProperty("javax.persistence.schema-generation.database.action"));
-		// properties.put("javax.persistence.schema-generation.create-source",
-		// env.getProperty("javax.persistence.schema-generation.create-source"));
-		// properties.put("javax.persistence.schema-generation.create-database-schemas",
-		// env.getProperty("javax.persistence.schema-generation.create-database-schemas"));
-
 		properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 		properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+		properties.put("hbm2ddl.import_files", "createdb.sql");
+		
 		return properties;
 	}
 

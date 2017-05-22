@@ -146,18 +146,17 @@ function saveOrder() {
 				BootstrapDialog.alert(data.errorMessage);
 			}else{
 			        BootstrapDialog.show({
-			            message: 'A rendelési azonosítója: ' + data.orderNumber + '. Fizetendő összeg: ' + data.orderPrice,
+			            message: 'Atonosito: ' + data.orderNumber + '. Osszeg: ' + data.orderPrice,
 			            data: {
 			                'userCode': data.userCode,
 			                'orderNumber': data.orderNumber,
 			                'orderPrice': data.orderPrice
 			            },
 			            buttons: [{
-			                label: 'See what you got',
+			                label: 'Accept',
 			                cssClass: 'btn-primary',
 			                action: function(dialogRef){
-
-			                	
+			                				                	
 			                	var jsonParam = {}
 			                	jsonParam["orderNumber"] = dialogRef.getData('orderNumber');
 			                				                	
@@ -193,9 +192,8 @@ function saveOrder() {
 			                			console.log("ERROR : ", e);
 
 			                		}
-			                	});
-
-			                }
+			                	});			                	
+			                }			            
 			            }]
 			        });
 			}
