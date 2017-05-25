@@ -3,8 +3,14 @@ package hu.barcode.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import org.hibernate.validator.constraints.Email;
 
+/**
+ * @author Ollé Csaba
+ * @project Generate Barcode
+ * @Created 18/05/2017
+ *
+ *          Store user data
+ */
 @Entity
 @Table(name = "barcode_user")
 public class BarcodeUser extends BaseEntity {
@@ -13,23 +19,22 @@ public class BarcodeUser extends BaseEntity {
 
 	@Column(name = "login_name", length = 10, nullable = false)
 	String loginName;
-	
+
 	@Column(name = "company_name", length = 100, nullable = false)
 	String companyName;
-	
+
 	@Column(name = "company_adress", length = 255, nullable = true)
 	String companyAdress;
-	
+
 	@Column(name = "email_adress", length = 50, nullable = false)
-	@Email
 	String emailAdress;
-	
-	@Column(name = "tax_number", length = 20,nullable = true)
+
+	@Column(name = "tax_number", length = 20, nullable = true)
 	String taxNumber;
-	
-	@Column(name = "admin_user", nullable = false, columnDefinition="int default 0")	
+
+	@Column(name = "admin_user", nullable = false, columnDefinition = "int default 0")
 	Boolean adminUser;
-	
+
 	public String getLoginName() {
 		return loginName;
 	}

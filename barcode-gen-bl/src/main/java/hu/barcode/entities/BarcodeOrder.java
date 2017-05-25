@@ -9,12 +9,19 @@ import javax.persistence.Table;
 import hu.barcode.enums.BarcodeOrderState;
 import hu.barcode.enums.BarcodeType;
 
+/**
+ * @author Ollé Csaba
+ * @project Generate Barcode
+ * @Created 18/05/2017
+ *
+ *          Save barcode order Data
+ */
 @Entity
 @Table(name = "barcode_order")
 public class BarcodeOrder extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	BarcodeUser userId;
@@ -26,11 +33,11 @@ public class BarcodeOrder extends BaseEntity {
 	Double orderPrice;
 
 	@Column(name = "barcode_type", nullable = false)
-//	@Range(min = 0, max = 1)
+	// @Range(min = 0, max = 1)
 	BarcodeType barcodeType;
 
 	@Column(name = "barcode_state", nullable = false)
-	//@Range(min = 0, max = 2)
+	// @Range(min = 0, max = 2)
 	BarcodeOrderState barcodeState;
 
 	@Column(name = "datamatrix_text", length = 255, nullable = true)
@@ -142,6 +149,7 @@ public class BarcodeOrder extends BaseEntity {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	protected Class<? extends BaseEntity> getEqualsClass() {
 		return BarcodeUser.class;

@@ -1,7 +1,6 @@
 package hu.barcode.config;
 
 import java.util.Properties;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,8 +9,15 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.stereotype.Component;
 
+/**
+ * @author Ollé Csaba
+ * @project Generate Barcode
+ * @Created 18/05/2017
+ *
+ *          Configure mail server (SMTP Authentication) Properties:
+ *          email.properties
+ */
 @Configuration
 @ComponentScan(basePackages = "hu.barcode")
 @PropertySource("classpath:email.properties")
@@ -23,7 +29,7 @@ public class MailConfig {
 	@Bean
 	public JavaMailSender getMailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		
+
 		Properties mailProperties = new Properties();
 		mailProperties.put("mail.smtp.auth", env.getProperty("mail.smtp.auth"));
 		mailProperties.put("mail.smtp.starttls.enable", env.getProperty("mail.smtp.starttls"));

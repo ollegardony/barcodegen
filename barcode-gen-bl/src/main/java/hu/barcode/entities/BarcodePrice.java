@@ -8,14 +8,22 @@ import org.hibernate.validator.constraints.Range;
 
 import hu.barcode.enums.BarcodeType;
 
+/**
+ * @author Ollé Csaba
+ * @project Generate Barcode
+ * @Created 18/05/2017
+ *
+ *          Store price list
+ *          Auto insert when deployed api (insert script.)
+ */
 @Entity
 @Table(name = "barcode_price")
 public class BarcodePrice extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Column(name = "barcode_type", nullable = false)
-	@Range(min=0, max=1)
+	@Range(min = 0, max = 1)
 	private BarcodeType barcodeType;
 
 	@Column(name = "char_from", nullable = true)
@@ -68,9 +76,9 @@ public class BarcodePrice extends BaseEntity {
 
 	public void setPrice(Double price) {
 		this.price = price;
-		
+
 	}
-	
+
 	@Override
 	protected Class<? extends BaseEntity> getEqualsClass() {
 		return BarcodePrice.class;

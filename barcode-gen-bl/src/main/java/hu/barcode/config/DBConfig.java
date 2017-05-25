@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -16,6 +17,15 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
+/**
+ * @author Ollé Csaba
+ * @project Generate Barcode
+ * @Created 15/05/2017
+ *
+ *          Configure Database Connection Set properties:
+ *          persistence-mssql.properties (Database acsess url, After
+ *          deploy(update, create or drop)
+ */
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:persistence-mssql.properties")
@@ -42,6 +52,7 @@ public class DBConfig {
 		dataSource.setUrl(env.getProperty("jdbc.url"));
 		dataSource.setUsername(env.getProperty("jdbc.user"));
 		dataSource.setPassword(env.getProperty("jdbc.pass"));
+		
 		return dataSource;
 	}
 
@@ -58,8 +69,16 @@ public class DBConfig {
 		properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 		properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 		properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-		properties.put("hbm2ddl.import_files", "createdb.sql");
-		
+
+		// properties.put("javax.persistence.schema-generation.database.action",
+		// "create");
+		// properties.put("javax.persistence.schema-generation.create-source",
+		// "script");
+		// properties.put("javax.persistence.schema-generation.create-script-source",
+		// "scripts/createdb.sql");
+		// properties.put("hibernate.hbm2ddl.import_files_sql_extractor",
+		// "org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor");
+
 		return properties;
 	}
 

@@ -2,9 +2,16 @@ package hu.barcode.dao;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
 import hu.barcode.entities.BarcodeOrder;
@@ -12,67 +19,103 @@ import hu.barcode.entities.BarcodePrice;
 import hu.barcode.entities.BarcodeUser;
 import hu.barcode.enums.BarcodeType;
 
+/**
+ * @author Ollé Csaba
+ * @project Generate Barcode
+ * @Created 18/05/2017
+ *
+ * @Data access layer
+ */
 @Repository
+@PropertySource("classpath:barcode.properties")
 public class BarcodeDAOImpl extends DAOBase implements BarcodeDAO {
 
-	@SuppressWarnings("unchecked")
+	@Autowired
+	private Environment env;
+
+	// Select barcode_price with where clauses
 	@Override
 	public List<BarcodePrice> getBarcodePriceList(int barcodeType, int codeNum) {
 
-		Session session = hibernateSessionFactory.getCurrentSession();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
+		CriteriaBuilder builder = getEntityManagerFactory().getCriteriaBuilder();
+		CriteriaQuery<BarcodePrice> criteriaQuery = builder.createQuery(BarcodePrice.class);
+		Root<BarcodePrice> root = criteriaQuery.from(BarcodePrice.class);
 
-		@SuppressWarnings("deprecation")
-		Criteria root = session.createCriteria(BarcodePrice.class, "rc");
+		criteriaQuery.select(root);
 
 		if (barcodeType == 0 || barcodeType == 1) {
-			root.add(Restrictions.eq("rc.barcodeType", BarcodeType.values()[barcodeType]));
+			criteriaQuery.where(builder.equal(root.get("barcodeType"), BarcodeType.values()[barcodeType]));
 		}
 
 		if (barcodeType == 1 && codeNum > 0) {
-			root.add(Restrictions.eq("rc.codeNumber", codeNum));
+			criteriaQuery.where(builder.equal(root.get("codeNumber"), codeNum));
 		}
 
-		return (List<BarcodePrice>) root.list();
+		List<BarcodePrice> l = em.createQuery(criteriaQuery).getResultList();
+
+		return l;
 
 	}
 
+	// Select from barcode_use where login_name = " loginName"
 	@Override
 	public BarcodeUser getBarcodeUser(String loginName) {
 
-		Session session = hibernateSessionFactory.getCurrentSession();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
+		CriteriaBuilder builder = getEntityManagerFactory().getCriteriaBuilder();
+		CriteriaQuery<BarcodeUser> criteriaQuery = builder.createQuery(BarcodeUser.class);
+		Root<BarcodeUser> root = criteriaQuery.from(BarcodeUser.class);
 
-		@SuppressWarnings("deprecation")
-		Criteria root = session.createCriteria(BarcodeUser.class, "rc");
-		root.add(Restrictions.eq("rc.loginName", loginName));
+		criteriaQuery.select(root);
+		criteriaQuery.where(builder.equal(root.get("loginName"), loginName));
+		List<BarcodeUser> userList = em.createQuery(criteriaQuery).getResultList();
 
-		return (BarcodeUser) root.uniqueResult();
+		if (userList.isEmpty()) {
+			return null;
+		}
 
+		return userList.get(0);
 	}
 
+	// Select barcode_order where order_number = "orderNumber"
 	@Override
 	public BarcodeOrder getBarcodeOrder(String orderNumber) {
-		Session session = hibernateSessionFactory.getCurrentSession();
 
-		@SuppressWarnings("deprecation")
-		Criteria root = session.createCriteria(BarcodeOrder.class, "rc");
-		root.add(Restrictions.eq("rc.orderNumber", orderNumber));
-		return (BarcodeOrder) root.uniqueResult();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
+		CriteriaBuilder builder = getEntityManagerFactory().getCriteriaBuilder();
+		CriteriaQuery<BarcodeOrder> criteriaQuery = builder.createQuery(BarcodeOrder.class);
+		Root<BarcodeOrder> root = criteriaQuery.from(BarcodeOrder.class);
+
+		criteriaQuery.select(root);
+		criteriaQuery.where(builder.equal(root.get("orderNumber"), orderNumber));
+
+		List<BarcodeOrder> orderList = em.createQuery(criteriaQuery).getResultList();
+
+		if (orderList.isEmpty()) {
+			return null;
+		}
+
+		return orderList.get(0);
 	}
 
+	// Save user Entity
 	@Override
 	public BarcodeUser saveBarcodeUser(BarcodeUser user) {
 		Session session = hibernateSessionFactory.getCurrentSession();
-		session.persist(user);
-		session.flush();
+		session.save(user);
 		return user;
 	}
 
+	// Save order Entity
 	@Override
 	public BarcodeOrder saveOrder(BarcodeOrder order) {
 		Session session = hibernateSessionFactory.getCurrentSession();
-		session.persist(order);
+		session.save(order);
+
 		if (order.getOrderNumber() == null || order.getOrderNumber().equals("")) {
-			order.setOrderNumber(order.getId().toString());
+			String orderNumber = env.getProperty("order.number.prefix");
+			order.setOrderNumber(orderNumber + order.getId().toString());
 			session.persist(order);
 		}
 		return order;

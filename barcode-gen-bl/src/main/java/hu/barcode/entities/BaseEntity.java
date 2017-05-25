@@ -12,23 +12,30 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * @author Ollé Csaba
+ * @project Generate Barcode
+ * @Created 18/05/2017
+ *
+ *          Base entity handle id, modify_dt, create_dt
+ */
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable{
+public abstract class BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
-	
+
 	@Column(name = "modify_dt", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	protected Date modifyDt = new Date();
 
 	@Column(name = "create_dt", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)	
+	@Temporal(TemporalType.TIMESTAMP)
 	protected Date createyDt = new Date();
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -52,10 +59,10 @@ public abstract class BaseEntity implements Serializable{
 	public void setCreateyDt(Date createyDt) {
 		this.createyDt = createyDt;
 	}
-	
+
 	@PreUpdate
-	public void onUpdate() {  
-		this.modifyDt = new Date(); 
+	public void onUpdate() {
+		this.modifyDt = new Date();
 	}
 
 	@Override
@@ -86,6 +93,5 @@ public abstract class BaseEntity implements Serializable{
 	}
 
 	protected abstract Class<? extends BaseEntity> getEqualsClass();
-	
-}
 
+}
